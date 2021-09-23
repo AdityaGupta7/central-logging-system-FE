@@ -11,17 +11,21 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <div className="left-search-col">
-            <FilterSection />
-          </div>
-          <div className="right-col">
-            <NavHeader />
-            <div className="container-switch">
-              {/* react router routes go here */}
-              <Switch>
-                <Route exact path='/' render={(props) => <Listing {...props} />} />
-                <Route exact path='/details' render={(props) => <Details {...props} />} />
-              </Switch>
+          <div className="main-wrapper">
+            <div className="main-wrapper-inner">
+              <div className="left-side-bar">
+                <FilterSection />
+              </div>
+              <div className="right-content-wrapper">
+                <NavHeader />
+                <div className="container-switch">
+                  {/* react router routes go here */}
+                  <Switch>
+                    <Route exact path='/' render={(props) => <Listing {...props} />} />
+                    <Route exact path='/details' render={(props) => <Details {...props} />} />
+                  </Switch>
+                </div>
+              </div>
             </div>
           </div>
         </div>
