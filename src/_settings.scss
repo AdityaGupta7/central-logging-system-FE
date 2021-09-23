@@ -1,0 +1,284 @@
+//Typography
+$typography: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue",
+  sans-serif;
+
+// Global variables
+$body-font-size: 16px !default;
+$body-line-height: 1.5 !default;
+
+// Font Weights
+$light: 100;
+$regular: 400;
+$med: 500;
+$bold: 600;
+
+// headings
+$h1-font-size: 48px;
+$h2-font-size: 36px;
+$h3-font-size: 30px;
+$h4-font-size: 24px;
+$h5-font-size: 20px;
+$h6-font-size: 18px;
+
+// Color scheme palette
+//PRIMARY COLORS
+$B300: #0065ff;
+$N700: #253858;
+$N0: #ffffff;
+//SECONDARY COLORS
+$R300: #ff5630;
+$Y300: #ffab00;
+$G300: #36b37e;
+$T300: #00c7e6;
+$P300: #6554c0;
+//Neutrals
+$N800: #172b4d;
+$N400: #505f79;
+$N300: #5e6c84;
+$N200: #6b778c;
+$N100: #7a869a;
+$N80: #97a0af;
+$N60: #b3bac5;
+$N40: #dfe1e6;
+$N20: #f4f5f7;
+$N10: #fafbfc;
+//Blues
+$B400: #0052cc;
+$B200: #4c9aff;
+$B100: #b3d4ff;
+$B50: #deebff;
+//Purples
+$P400: #5243aa;
+$P200: #8777d9;
+$P100: #998dd9;
+$P50: #eae6ff;
+//Reds
+$R400: #de350b;
+$R200: #ff7452;
+$R100: #ff8f73;
+$R50: #ffebe6;
+//Yellows
+$Y400: #ff991f;
+$Y200: #ffc400;
+$Y100: #ffe380;
+$Y50: #fff0b3;
+//Green
+$G400: #00875a;
+$G200: #57d9a3;
+$G100: #79f2c0;
+$G50: #e3fcef;
+//Teals
+$T400: #00a3bf;
+$T200: #00c7e6;
+$T100: #79e2f2;
+$T50: #e6fcff;
+//generic color variables
+$brand-color: $B300;
+$white: $N0;
+$primary-text-color: $N700;
+$red: $R300;
+$error: $red;
+$green: $G300;
+$purple: $P300;
+$yellow: $Y300;
+$secondary-grey: $N20;
+
+// buttons
+$btn-default: 160;
+$btn-xsmall: $btn-default - 60;
+$btn-small: $btn-default - 30;
+$btn-large: $btn-default + 30;
+
+// grid variables
+$row: 1140px;
+$container: $row;
+$grid-columns: 12 !default; // Set number of columns in the grid
+$gutter: 15px !default; // Set gutter size
+
+// breakpoints
+$xxsmall: 0;
+
+// 0
+$xsmall: 640px;
+
+// 40em
+$small: 768px;
+
+// 48em//Typography
+$typography: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue",
+  sans-serif;
+
+// Global variables
+$body-font-size: 16px !default;
+$body-line-height: 1.5 !default;
+
+// Font Weights
+$light: 100;
+$regular: 300;
+$med: 500;
+$bold: 600;
+
+// headings
+$h1-font-size: 48px;
+$h2-font-size: 36px;
+$h3-font-size: 30px;
+$h4-font-size: 24px;
+$h5-font-size: 20px;
+$h6-font-size: 18px;
+
+// Color scheme palette
+//PRIMARY COLORS
+$B300: #0065ff;
+$N700: #253858;
+$N0: #ffffff;
+//SECONDARY COLORS
+$R300: #ff5630;
+$Y300: #ffab00;
+$G300: #36b37e;
+$T300: #00c7e6;
+$P300: #6554c0;
+//Neutrals
+$N800: #172b4d;
+$N400: #505f79;
+$N300: #5e6c84;
+$N200: #6b778c;
+$N100: #7a869a;
+$N80: #97a0af;
+$N60: #b3bac5;
+$N40: #dfe1e6;
+$N20: #f4f5f7;
+$N10: #fafbfc;
+//Blues
+$B400: #0052cc;
+$B200: #4c9aff;
+$B100: #b3d4ff;
+$B50: #deebff;
+//Purples
+$P400: #5243aa;
+$P200: #8777d9;
+$P100: #998dd9;
+$P50: #eae6ff;
+//Reds
+$R400: #de350b;
+$R200: #ff7452;
+$R100: #ff8f73;
+$R50: #ffebe6;
+//Yellows
+$Y400: #ff991f;
+$Y200: #ffc400;
+$Y100: #ffe380;
+$Y50: #fff0b3;
+//Green
+$G400: #00875a;
+$G200: #57d9a3;
+$G100: #79f2c0;
+$G50: #e3fcef;
+//Teals
+$T400: #00a3bf;
+$T200: #00c7e6;
+$T100: #79e2f2;
+$T50: #e6fcff;
+//generic color variables
+$brand-color: $B300;
+$white: $N0;
+$primary-text-color: $N700;
+$red: $R300;
+$error: $red;
+$green: $G300;
+$purple: $P300;
+$yellow: $Y300;
+$secondary-grey: $N20;
+$buttonColor: $B300;
+
+// buttons
+$btn-default: 160;
+$btn-xsmall: $btn-default - 60;
+$btn-small: $btn-default - 30;
+$btn-large: $btn-default + 30;
+
+// grid variables
+$row: 1140px;
+$container: $row;
+$grid-columns: 12 !default; // Set number of columns in the grid
+$gutter: 15px !default; // Set gutter size
+
+// breakpoints
+$xxsmall: 0;
+
+// 0
+$xsmall: 640px;
+
+// 40em
+$small: 768px;
+
+// 48em
+$medium: 1024px;
+
+// 64em
+$large: 1200px;
+
+// 75em
+$xlarge: 1500px;
+
+// 93.750em
+$xxlarge: 1760px;
+
+// 110em
+
+// Media
+$xxsmall-up: "only screen and (min-width:#{$xxsmall})";
+$xsmall-up: "only screen and (min-width:#{$xsmall})";
+$small-up: "only screen and (min-width:#{$small})";
+$medium-up: "only screen and (min-width:#{$medium})";
+$large-up: "only screen and (min-width:#{$large})";
+$xlarge-up: "only screen and (min-width:#{$xlarge})";
+$xxlarge-up: "only screen and (min-width:#{$xxlarge})";
+
+$xsmall-down: "only screen and (max-width:#{$xsmall - 1})";
+$small-down: "only screen and (max-width:#{$small - 1})";
+$medium-down: "only screen and (max-width:#{$medium - 1})";
+$large-down: "only screen and (max-width:#{$large - 1})";
+$xlarge-down: "only screen and (max-width:#{$xlarge - 1})";
+$xxlarge-down: "only screen and (max-width:#{$xxlarge - 1})";
+
+$mobile: "only screen and (min-width:#{$xxsmall}) and (max-width:#{$xsmall})";
+$tab: "only screen and (min-width:#{$xsmall}) and (max-width:#{$small})";
+$iPad: "only screen and (min-width:#{$small}) and (max-width:#{$medium})";
+$laptop: "only screen and (min-width:#{$medium}) and (max-width:#{$large})";
+$desktop: "only screen and (min-width:#{$large}) and (max-width:#{$xlarge})";
+
+$medium: 1024px;
+
+// 64em
+$large: 1200px;
+
+// 75em
+$xlarge: 1500px;
+
+// 93.750em
+$xxlarge: 1760px;
+
+// 110em
+
+// Media
+$xxsmall-up: "only screen and (min-width:#{$xxsmall})";
+$xsmall-up: "only screen and (min-width:#{$xsmall})";
+$small-up: "only screen and (min-width:#{$small})";
+$medium-up: "only screen and (min-width:#{$medium})";
+$large-up: "only screen and (min-width:#{$large})";
+$xlarge-up: "only screen and (min-width:#{$xlarge})";
+$xxlarge-up: "only screen and (min-width:#{$xxlarge})";
+
+$xsmall-down: "only screen and (max-width:#{$xsmall - 1})";
+$small-down: "only screen and (max-width:#{$small - 1})";
+$medium-down: "only screen and (max-width:#{$medium - 1})";
+$large-down: "only screen and (max-width:#{$large - 1})";
+$xlarge-down: "only screen and (max-width:#{$xlarge - 1})";
+$xxlarge-down: "only screen and (max-width:#{$xxlarge - 1})";
+
+$mobile: "only screen and (min-width:#{$xxsmall}) and (max-width:#{$xsmall})";
+$tab: "only screen and (min-width:#{$xsmall}) and (max-width:#{$small})";
+$iPad: "only screen and (min-width:#{$small}) and (max-width:#{$medium})";
+$laptop: "only screen and (min-width:#{$medium}) and (max-width:#{$large})";
+$desktop: "only screen and (min-width:#{$large}) and (max-width:#{$xlarge})";
+$wide-phone: "only screen and (max-width:#{$small}) and (orientation : landscape)";
