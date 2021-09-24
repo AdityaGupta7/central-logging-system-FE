@@ -5,7 +5,6 @@ import Charts from './Listing/Charts/Charts';
 
 class Listing extends Component {
     render() {
-        console.log('props from listing -> ', this.props);
         return (
             <Fragment>
                 <Filters />

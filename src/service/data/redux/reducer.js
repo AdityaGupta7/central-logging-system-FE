@@ -6,13 +6,14 @@ const initialStateFiltersList = {
 };
 
 const filtersList = (state = initialStateFiltersList, action) => {
-    if (action.type === UPDATE_FILTERS_LIST) {
-        return {
-            ...state,
-            filtersList: action.payload
-        };
+    switch (action.type) {
+        case UPDATE_FILTERS_LIST:
+            return {
+                filtersList: action.payload
+            };
+        default:
+            return state;
     }
-    return state;
 }
 
 const initialStateSourceList = {
@@ -63,6 +64,7 @@ const allLogs = (state = initialStateAllLogs, action) => {
                 error: null
             };
         case FETCH_LOGS_LISTING_SUCCESS:
+            console.log('a.p -> ', action.payload);
             return {
                 ...state,
                 loading: false,
@@ -73,7 +75,7 @@ const allLogs = (state = initialStateAllLogs, action) => {
             return {
                 ...state,
                 loading: false,
-                error: "Could not fetch logs",
+                error: "Could not find logs for the chosen filters",
                 allLogs: []
             };
         default:
