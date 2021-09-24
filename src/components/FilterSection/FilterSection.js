@@ -4,38 +4,40 @@ import { connect } from "react-redux";
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { fetchLogsListInjector, fetchMasterSource, updateFiltersListInjector, clearLogsData } from '../../service/data/redux/actions';
-import { numRegex, dateFormat } from '../utils/constants';
+import { numRegex, dateFormat, stateVariables } from '../utils/constants';
 import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 import moment from 'moment';
 
 class FilterSection extends Component {
     constructor(props) {
         super(props);
-        const savedState = props && props.location && props.location.state;
         this.state = {
-            source: (savedState && savedState.source) || "",
+            source: "",
             dateRange: null,
-            custId: (savedState && savedState.custId) || "",
-            mobNo: (savedState && savedState.mobNo) || "",
-            url: (savedState && savedState.url) || "",
-            leadId: (savedState && savedState.leadId) || "",
-            isDisabled: (savedState && savedState.isDisabled) || false
+            custId: "",
+            mobNo: "",
+            url: "",
+            leadId: ""
         };
         this.debouncedAddToFiltersList = debounce(this.debouncedAddToFiltersList.bind(this), 1500);
     }
 
     componentDidMount() {
         this.props.loadSourceList();
+
+        const { location } = this.props;
+        if (location && location.state && location.state.filtersList && location.pathname === '/details') {
+            this.initializeState(location.state.filtersList);
+        }
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (!isEqual(prevProps.filtersList, this.props.filtersList)) {
             const filtersList = this.props.filtersList;
             if (prevProps.filtersList.length > filtersList.length) {
-                console.log('cleanup hit');
                 //fields cleanup
                 const obj = {};
-                ['source', 'dateRange', 'custId', 'mobNo', 'url', 'leadId',].filter(item => filtersList.find(el => el.type === item) === undefined).forEach(item => {
+                stateVariables.filter(item => filtersList.find(el => el.type === item) === undefined).forEach(item => {
                     if (item === "dateRange") {
                         obj[item] = null;
                     }
@@ -44,16 +46,14 @@ class FilterSection extends Component {
                     }
                 });
                 if (Object.keys(obj).length > 0) {
-                    this.setState(obj, () => console.log('state after cleanup -> ', this.state));
+                    this.setState(obj);
                 }
             }
 
             const noEmptyValue = filtersList.filter(item => item.value);
-            console.log('nonEmptyValue -> ', noEmptyValue);
             if (noEmptyValue.length > 0) {
                 //send fetch logs API
                 const reqPayload = noEmptyValue.map(item => ({ type: item.type, value: item.value }));
-                console.log('fetch API hit -> ', reqPayload);
                 this.props.fetchLogs(reqPayload);
             }
             else {
@@ -61,8 +61,39 @@ class FilterSection extends Component {
                 this.props.clearLogsData();
             }
         }
-        if (!isEqual(prevProps.location.state, this.props.location.state) && this.props.location.state) {
 
+        if (prevProps.location.pathname === "/details" && this.props.location.pathname === "/" && this.props.filtersList.length === 0) {
+            //clear all values
+            this.setState({
+                source: "",
+                dateRange: null,
+                custId: "",
+                mobNo: "",
+                url: "",
+                leadId: ""
+            });
+        }
+    }
+
+    initializeState = (stateObj) => {
+        if (stateObj && stateObj.length > 0) {
+            const obj = {
+                source: "",
+                dateRange: null,
+                custId: "",
+                mobNo: "",
+                url: "",
+                leadId: ""
+            };
+            stateObj.forEach(item => {
+                if (item.type === "dateRange") {
+                    obj["dateRange"] = item.originalDateRange;
+                }
+                else {
+                    obj[item.type] = item.value;
+                }
+            });
+            this.setState(obj);
         }
     }
 
@@ -151,7 +182,6 @@ class FilterSection extends Component {
     }
 
     onDatesSelection = (val) => {
-        console.log('from date picker -> ', JSON.stringify(val));
         this.setState({
             dateRange: val
         }, () => {
@@ -169,12 +199,13 @@ class FilterSection extends Component {
     }
 
     render() {
-        const { source, custId, mobNo, url, leadId, isDisabled, dateRange } = this.state;
-        const { sourceList, sourceListLoader, filtersList } = this.props;
+        const { source, custId, mobNo, url, leadId, dateRange } = this.state;
+        const { sourceList, sourceListLoader, filtersList, location } = this.props;
         const filterHasValues = filtersList.filter(item => item.value).length > 0;
         let fifteenDaysAgo = new Date();
         fifteenDaysAgo.setDate(fifteenDaysAgo.getDate() - 15);
-        const commonDisabler = sourceListLoader || sourceList.length === 0 || source === "";
+        const isDetails = location && location.pathname === "/details";
+        const commonDisabler = sourceListLoader || sourceList.length === 0 || source === "" || isDetails;
         return (
             <div className="filter-wrapper">
                 <div className="filter-wrapper-inner">
@@ -200,7 +231,7 @@ class FilterSection extends Component {
                                 <li>
                                     <div className="floating__placeholder select__type mobile__view">
                                         <div className="floating__placeholder__inner">
-                                            <select value={source} disabled={sourceListLoader || isDisabled} onChange={this.onSelectChange}>
+                                            <select value={source} disabled={sourceListLoader || isDetails} onChange={this.onSelectChange}>
                                                 <option disabled hidden value="" key="">Select Source</option>
                                                 {sourceList.map(item => (
                                                     <option value={item} key={item}>{item}</option>
@@ -208,7 +239,7 @@ class FilterSection extends Component {
                                             </select>
                                             <label>Source Selection</label>
                                         </div>
-                                        <small className="validation__error__msg">This is error</small>
+                                        {!source ? <small className="validation__error__msg">Select logs source</small> : null}
                                     </div>
                                 </li>
 
@@ -264,9 +295,16 @@ class FilterSection extends Component {
 
                             </ul>
 
-                            {filterHasValues ? <div className="btn-control">
+                            {(isDetails || filterHasValues) ? <div className="btn-control">
                                 <div className="btn-controls-inner">
-                                    <button className="btn btn-primary" onClick={this.onReset}>Reset</button>
+                                    <button className="btn btn-primary" onClick={() => {
+                                        if (isDetails) {
+                                            this.props.history.goBack();
+                                        }
+                                        else {
+                                            this.onReset();
+                                        }
+                                    }}>{isDetails ? "Go Back" : "Reset"}</button>
                                 </div>
                             </div> : null}
                         </div>
@@ -281,6 +319,7 @@ const mapStateToProps = state => ({
     sourceList: state && state.allReducers && state.allReducers.sourceList && state.allReducers.sourceList.sourceList,
     sourceListLoader: state && state.allReducers && state.allReducers.sourceList && state.allReducers.sourceList.loading,
     filtersList: state && state.allReducers && state.allReducers.filtersList && state.allReducers.filtersList.filtersList,
+    allLogs: state && state.allReducers && state.allReducers.allLogs && state.allReducers.allLogs.allLogs && state.allReducers.allLogs.allLogs,
 });
 
 const mapDispatchToProps = dispatch => ({

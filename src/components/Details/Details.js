@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
+import { compose } from 'redux';
+import { withRouter } from 'react-router-dom';
+import ReactJson from 'react-json-view';
 
 class Details extends Component {
     render() {
+        const { location: { state: { selectedItem } } } = this.props;
+        console.log('selectedItem -> ', selectedItem);
         return (
             <div className="details-container">
                 <div className="details-container-inner">
@@ -9,23 +14,25 @@ class Details extends Component {
 
                     <div className="search-results-wrapper success">
                         <div className="search-results-wrapper-inner">
-                            
+
                             <div className="url-block">
                                 <ul>
-                                    <li><strong>URL:</strong> https://www.flaticon.com/free-icon/close_1828666?term=cross&page=1&position=7&page=1&position=7&related_id=1828666&origin=search</li>
-                                    <li>(Post)</li>
-                                    <li><p className="card-state">Success</p></li>
+                                    <li><strong>URL:</strong> {selectedItem.url}</li>
+                                    <li>({selectedItem.requestType})</li>
+                                    <li><p className="card-state">{selectedItem.isSuccess ? "SUCCESS" : "FAILED"}</p></li>
                                 </ul>
                             </div>
 
                             <h6 className="container-heading">Request Payload</h6>
                             <div className="result-wrapper payload">
-                                <pre></pre>
+                                {/* <pre></pre> */}
+                                <ReactJson src={selectedItem.requestPayload} name={null} theme="summerfruit:inverted" />
                             </div>
 
                             <h6 className="container-heading">Response</h6>
                             <div className="result-wrapper response">
-                                <pre></pre>
+                                {/* <pre></pre> */}
+                                <ReactJson src={selectedItem.response} name={null} theme="summerfruit:inverted" />
                             </div>
                         </div>
                     </div>
@@ -35,4 +42,4 @@ class Details extends Component {
     }
 }
 
-export default Details;
+export default compose(withRouter)(Details);

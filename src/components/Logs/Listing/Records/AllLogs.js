@@ -2,12 +2,22 @@ import React, { Component } from 'react';
 import Loader from '../../../utils/Loader';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import { withRouter } from 'react-router-dom';
 
 class AllLogs extends Component {
+    redirectToDetails = (item) => {
+        const { filtersList, history } = this.props;
+        history.push({
+            pathname: '/details',
+            state: {
+                filtersList: filtersList.filter(item => item.value),
+                selectedItem: item
+            }
+        });
+    }
+
     render() {
         const { allLogs, allLogsLoader, allLogsError } = this.props;
-        console.log('allLogs -> ', allLogs);
         return (
             <div className="logs-listing">
                 <div className="logs-listing-inner">
@@ -18,7 +28,7 @@ class AllLogs extends Component {
                         {allLogsLoader ? <Loader /> : (allLogs && allLogs.length > 0) ? <>
                             {allLogs.map(item => {
                                 return (
-                                    <div className={`card ${item.isSuccess ? "success" : "failure"}`}>
+                                    <div className={`card ${item.isSuccess ? "success" : "failure"}`} onClick={() => this.redirectToDetails(item)}>
                                         <div className="card-inner">
                                             <p className="card-state">{item.isSuccess ? "SUCCESS" : "FAILED"}</p>
                                             <p className="url"><strong>URL:</strong> {item.url}</p>
@@ -198,6 +208,9 @@ const mapStateToProps = state => ({
     allLogs: state && state.allReducers && state.allReducers.allLogs && state.allReducers.allLogs.allLogs && state.allReducers.allLogs.allLogs,
     allLogsLoader: state && state.allReducers && state.allReducers.allLogs && state.allReducers.allLogs.loading,
     allLogsError: state && state.allReducers && state.allReducers.allLogs && state.allReducers.allLogs.error,
+    sourceList: state && state.allReducers && state.allReducers.sourceList && state.allReducers.sourceList.sourceList,
+    sourceListLoader: state && state.allReducers && state.allReducers.sourceList && state.allReducers.sourceList.loading,
+    filtersList: state && state.allReducers && state.allReducers.filtersList && state.allReducers.filtersList.filtersList,
 });
 
 const mapDispatchToProps = dispatch => ({

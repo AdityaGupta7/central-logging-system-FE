@@ -64,7 +64,6 @@ const allLogs = (state = initialStateAllLogs, action) => {
                 error: null
             };
         case FETCH_LOGS_LISTING_SUCCESS:
-            console.log('a.p -> ', action.payload);
             return {
                 ...state,
                 loading: false,
