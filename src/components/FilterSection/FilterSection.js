@@ -347,7 +347,18 @@ class FilterSection extends Component {
 
                             <div className="btn-control">
                                 <div className="btn-controls-inner">
-                                    {isDetails ? null : <button className="btn btn-primary" onClick={this.onSubmit}>Submit</button>}
+                                    <ul className={isDetails ? "" : "two-column"}>
+                                        {isDetails ? null : <li><button className="btn btn-primary" onClick={this.onSubmit}>Submit</button></li>}
+                                        <li> <button className={`btn btn-primary ${isDetails ? '' : 'btn-primary-outline'}`} onClick={() => {
+                                            if (isDetails) {
+                                                this.props.history.goBack();
+                                            }
+                                            else {
+                                                this.onReset();
+                                            }
+                                        }}>{isDetails ? "Go Back" : "Reset"}</button></li>
+                                    </ul>
+                                    {/* {isDetails ? null : <button className="btn btn-primary" onClick={this.onSubmit}>Submit</button>}
                                     <button className="btn btn-primary" onClick={() => {
                                         if (isDetails) {
                                             this.props.history.goBack();
@@ -355,7 +366,7 @@ class FilterSection extends Component {
                                         else {
                                             this.onReset();
                                         }
-                                    }}>{isDetails ? "Go Back" : "Reset"}</button>
+                                    }}>{isDetails ? "Go Back" : "Reset"}</button> */}
                                 </div>
                             </div>
                         </div>

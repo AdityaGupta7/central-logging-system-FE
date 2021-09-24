@@ -30,11 +30,27 @@ ol {
     font-size: 14px;
     letter-spacing: 0.22px;
     display: block;
+    @include transitions;
 
     &.btn-primary {
         border-color: $B300;
         background-color: $B300;
         color: $N0;
+        opacity: 0.9;
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    &.btn-primary-outline {
+        background-color: $N0;
+        color: $B300;
+
+        &:hover {
+            background-color: $B300;
+            color: $N0;
+        }
     }
 }
 
@@ -316,7 +332,7 @@ ol {
 // filter wrapper left side
 .filter-wrapper {
     background-color: $N0;
-    border-radius: 32px;
+    border-radius: 8px;
     padding: 20px 14px;
     height: calc(100vh - 32px);
     overflow-y: auto;
@@ -337,7 +353,7 @@ ol {
 
     .filter-wrapper-inner {
         .brand-title {
-            margin-bottom: 30px;
+            margin-bottom: 26px;
 
             h3 {
                 font-size: 22px;
@@ -346,7 +362,7 @@ ol {
                 text-transform: uppercase;
                 letter-spacing: 1px;
 
-                img{
+                img {
                     width: 20px;
                     vertical-align: middle;
                     margin-top: -2px;
@@ -356,8 +372,8 @@ ol {
 
         .filter-list-wrapper {
             .filter-list-wrapper-inner {
-                ul {
-                    li {
+                &>ul {
+                    &>li {
                         // &:not(:last-child) {
                         margin-bottom: 13px;
                         padding-bottom: 13px;
@@ -853,6 +869,24 @@ ol {
 // btn control
 .btn-control {
     // margin-top: 20px;
+
+    ul {
+        @include flexbox;
+        @include justify-content(space-between);
+        @include flex-wrap(wrap);
+
+        li {
+            @include flex-basis(100%);
+            max-width: 100%;
+        }
+
+        &.two-column {
+            li {
+                @include flex-basis(calc(50% - 8px));
+                max-width: calc(50% - 8px);
+            }
+        }
+    }
 
     .btn {
         width: 100%;
