@@ -36,12 +36,13 @@ export const fetchLogsList = async (dispatch, reqPayload) => {
 
     try {
         const response = await urlService.getAllLogs(reqPayload);
-        const list = response.data;
-        if (list.length === 0) {
+        const list = JSON.parse(response.data?.body)?.dbGetData;
+        console.log('list -> ', list);
+        if (list?.length === 0) {
             dispatch({ type: FETCH_LOGS_LISTING_EMPTY });
         }
         else {
-            dispatch({ type: FETCH_LOGS_LISTING_SUCCESS, payload: response.data });
+            dispatch({ type: FETCH_LOGS_LISTING_SUCCESS, payload: list });
         }
     } catch (e) {
         dispatch({ type: FETCH_LOGS_LISTING_FAIL });

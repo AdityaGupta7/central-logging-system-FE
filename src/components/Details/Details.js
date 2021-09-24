@@ -22,8 +22,8 @@ class Details extends Component {
                                     </ul>
                                     <ul>
                                         <li><label>Type:</label> ({selectedItem.requestType})</li>
-                                        <li><label>Status Code:</label>500</li>
-                                        <li><label>Time:</label>234 ms</li>
+                                        <li><label>Status Code:</label>{selectedItem.statusCode}</li>
+                                        <li><label>Time:</label>{selectedItem.responseTime} ms</li>
                                         <li><label>Log Status:</label><p className="card-state">{selectedItem.isSuccess ? "SUCCESS" : "FAILED"}</p></li>
                                     </ul>
                                 </div>

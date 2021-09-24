@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import popupClose from '../../../../images/close.png';
 import { Chart } from "react-google-charts";
+import moment from 'moment';
 
 class AllLogs extends Component {
     redirectToDetails = (item) => {
@@ -64,7 +65,7 @@ class AllLogs extends Component {
                                                         <div className="data-block">
                                                             <div className="data-block-inner">
                                                                 <label htmlFor="">Created On</label>
-                                                                <strong>12-10-2921</strong>
+                                                                <strong>{moment(item.createdOn).format("DD-MM-YYYY")}</strong>
                                                             </div>
                                                         </div>
                                                     </li> : null}
