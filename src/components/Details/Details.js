@@ -12,7 +12,7 @@ class Details extends Component {
                 <div className="details-container-inner">
                     <h6 className="container-heading">Search Results</h6>
 
-                    <div className="search-results-wrapper success">
+                    <div className={`search-results-wrapper ${selectedItem.isSuccess ? "success" : "failure"}`}>
                         <div className="search-results-wrapper-inner">
 
                             <div className="url-block">

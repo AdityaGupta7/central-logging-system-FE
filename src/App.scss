@@ -405,6 +405,12 @@ ol {
                 letter-spacing: 0.5px;
                 @include align-self(center);
 
+                img{
+                    width: 30px;
+                    margin-right: 5px;
+                    vertical-align: middle;
+                }
+
                 .App-clock {
                     font-weight: $regular;
                     font-size: 12px;
