@@ -9,6 +9,7 @@ class Details extends Component {
 
                     <div className="search-results-wrapper success">
                         <div className="search-results-wrapper-inner">
+                            
                             <div className="url-block">
                                 <ul>
                                     <li><strong>URL:</strong> https://www.flaticon.com/free-icon/close_1828666?term=cross&page=1&position=7&page=1&position=7&related_id=1828666&origin=search</li>
