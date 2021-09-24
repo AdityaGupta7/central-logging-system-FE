@@ -6,7 +6,8 @@ import {
     FETCH_MASTER_SOURCE_FAIL,
     FETCH_LOGS_LISTING_REQ,
     FETCH_LOGS_LISTING_SUCCESS,
-    FETCH_LOGS_LISTING_FAIL
+    FETCH_LOGS_LISTING_FAIL,
+    FETCH_LOGS_LISTING_EMPTY
 } from "./actionTypes";
 
 export const updateFiltersList = (dispatch, data) => {
@@ -35,7 +36,13 @@ export const fetchLogsList = async (dispatch, reqPayload) => {
 
     try {
         const response = await urlService.getAllLogs(reqPayload);
-        dispatch({ type: FETCH_LOGS_LISTING_SUCCESS, payload: response.data });
+        const list = response.data;
+        if (list.length === 0) {
+            dispatch({ type: FETCH_LOGS_LISTING_EMPTY });
+        }
+        else {
+            dispatch({ type: FETCH_LOGS_LISTING_SUCCESS, payload: response.data });
+        }
     } catch (e) {
         dispatch({ type: FETCH_LOGS_LISTING_FAIL });
     }

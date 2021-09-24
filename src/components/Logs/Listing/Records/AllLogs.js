@@ -17,7 +17,7 @@ class AllLogs extends Component {
     }
 
     render() {
-        const { allLogs, allLogsLoader, allLogsError } = this.props;
+        const { allLogs, allLogsLoader, allLogsError, allLogsEmptyMsg } = this.props;
         return (
             <div className="logs-listing">
                 <div className="logs-listing-inner">
@@ -194,7 +194,7 @@ class AllLogs extends Component {
                             </div>*/}
                         </> : <div className="no-result-screen">
                             <div className="no-result-screen-inner">
-                                <h4>{allLogsError || "Start Filtering"}</h4>
+                                <h4>{allLogsError || allLogsEmptyMsg || "Start Filtering"}</h4>
                             </div>
                         </div>}
                     </div>
@@ -208,6 +208,7 @@ const mapStateToProps = state => ({
     allLogs: state && state.allReducers && state.allReducers.allLogs && state.allReducers.allLogs.allLogs && state.allReducers.allLogs.allLogs,
     allLogsLoader: state && state.allReducers && state.allReducers.allLogs && state.allReducers.allLogs.loading,
     allLogsError: state && state.allReducers && state.allReducers.allLogs && state.allReducers.allLogs.error,
+    allLogsEmptyMsg: state && state.allReducers && state.allReducers.allLogs && state.allReducers.allLogs.emptyMessage,
     sourceList: state && state.allReducers && state.allReducers.sourceList && state.allReducers.sourceList.sourceList,
     sourceListLoader: state && state.allReducers && state.allReducers.sourceList && state.allReducers.sourceList.loading,
     filtersList: state && state.allReducers && state.allReducers.filtersList && state.allReducers.filtersList.filtersList,

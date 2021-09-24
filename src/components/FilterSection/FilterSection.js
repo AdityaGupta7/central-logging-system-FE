@@ -51,16 +51,7 @@ class FilterSection extends Component {
                 }
             }
 
-            const noEmptyValue = filtersList.filter(item => item.value);
-            if (noEmptyValue.length > 0) {
-                //send fetch logs API
-                const reqPayload = noEmptyValue.map(item => ({ type: item.type, value: item.value }));
-                this.props.fetchLogs(reqPayload);
-            }
-            else {
-                //last filter also removed - no data state
-                this.props.clearLogsData();
-            }
+            this.callFetchLogsAPI();
         }
 
         if (prevProps.location.pathname === "/details" && this.props.location.pathname === "/" && this.props.filtersList.length === 0) {
@@ -73,6 +64,20 @@ class FilterSection extends Component {
                 url: "",
                 leadId: ""
             });
+        }
+    }
+
+    callFetchLogsAPI = () => {
+        const { filtersList } = this.props;
+        //const noEmptyValue = filtersList.filter(item => item.value);
+        if (filtersList.length > 0) {
+            //send fetch logs API
+            const reqPayload = filtersList.map(item => ({ type: item.type, value: item.value }));
+            this.props.fetchLogs(reqPayload);
+        }
+        else {
+            //last filter also removed - no data state
+            this.props.clearLogsData();
         }
     }
 
@@ -119,7 +124,7 @@ class FilterSection extends Component {
         this.setState({
             source: e.target.value
         }, () => {
-            this.addToFiltersList({ type: 'source', value: this.state.source, label: 'Source' });
+            // this.addToFiltersList({ type: 'source', value: this.state.source, label: 'Source' });
         });
     }
 
@@ -131,7 +136,7 @@ class FilterSection extends Component {
                 this.setState({
                     custId: val
                 }, () => {
-                    this.debouncedAddToFiltersList({ type: 'custId', value: this.state.custId, label: 'Customer ID' });
+                    // this.debouncedAddToFiltersList({ type: 'custId', value: this.state.custId, label: 'Customer ID' });
                 });
             }
         }
@@ -145,7 +150,7 @@ class FilterSection extends Component {
                 this.setState({
                     mobNo: val
                 }, () => {
-                    this.debouncedAddToFiltersList({ type: 'mobNo', value: this.state.mobNo, label: 'Mobile' });
+                    // this.debouncedAddToFiltersList({ type: 'mobNo', value: this.state.mobNo, label: 'Mobile' });
                 });
             }
         }
@@ -156,7 +161,7 @@ class FilterSection extends Component {
         this.setState({
             url: val
         }, () => {
-            this.debouncedAddToFiltersList({ type: 'url', value: this.state.url, label: 'URL' });
+            // this.debouncedAddToFiltersList({ type: 'url', value: this.state.url, label: 'URL' });
         });
     }
 
@@ -168,7 +173,7 @@ class FilterSection extends Component {
                 this.setState({
                     leadId: val
                 }, () => {
-                    this.debouncedAddToFiltersList({ type: 'leadId', value: this.state.leadId, label: 'Lead ID' });
+                    // this.debouncedAddToFiltersList({ type: 'leadId', value: this.state.leadId, label: 'Lead ID' });
                 });
             }
         }
@@ -176,17 +181,24 @@ class FilterSection extends Component {
 
     onReset = () => {
         //clear all state vals and prop vals
-        const { filtersList } = this.props;
-        if (filtersList.filter(item => item.value).length > 0) {
-            this.props.updateFiltersList([]);
-        }
+        //const { filtersList } = this.props;
+        //if (filtersList.filter(item => item.value).length > 0) {
+        this.setState({
+            source: "",
+            dateRange: null,
+            custId: "",
+            mobNo: "",
+            url: "",
+            leadId: ""
+        }, () => this.props.updateFiltersList([]));
+        //}
     }
 
     onDatesSelection = (val) => {
         this.setState({
             dateRange: val
         }, () => {
-            const { dateRange } = this.state;
+            /*const { dateRange } = this.state;
             let str = null;
             if (dateRange && dateRange.length === 2) {
                 //non-empty dateRange
@@ -196,13 +208,50 @@ class FilterSection extends Component {
                 str = `${startDate} - ${endDate}`;
             }
             this.addToFiltersList({ type: 'dateRange', value: str, label: 'Date range', originalDateRange: dateRange });
-        });
+        */});
+    }
+
+    onSubmit = () => {
+        const { source, dateRange, custId, mobNo, url, leadId } = this.state;
+        const filtersList = [];
+        if (source) {
+            filtersList.push({ type: 'source', value: source, label: 'Source' });
+        }
+        if (dateRange) {
+            let str = null;
+            if (dateRange && dateRange.length === 2) {
+                //non-empty dateRange
+                const startDate = moment(dateRange[0]).format(dateFormat);
+                const endDate = moment(dateRange[1]).format(dateFormat);
+
+                str = `${startDate} - ${endDate}`;
+            }
+            filtersList.push({ type: 'dateRange', value: str, label: 'Date range', originalDateRange: dateRange });
+        }
+        if (custId) {
+            filtersList.push({ type: 'custId', value: custId, label: 'Customer ID' });
+        }
+        if (mobNo) {
+            filtersList.push({ type: 'mobNo', value: mobNo, label: 'Mobile' });
+        }
+        if (url) {
+            filtersList.push({ type: 'url', value: url, label: 'URL' });
+        }
+        if (leadId) {
+            filtersList.push({ type: 'leadId', value: leadId, label: 'Lead ID' });
+        }
+        if (filtersList.length > 0) {
+            this.props.updateFiltersList(filtersList);
+        }
+        else {
+            //dispatch toast message
+        }
     }
 
     render() {
         const { source, custId, mobNo, url, leadId, dateRange } = this.state;
         const { sourceList, sourceListLoader, filtersList, location } = this.props;
-        const filterHasValues = filtersList.filter(item => item.value).length > 0;
+        // const filterHasValues = filtersList.filter(item => item.value).length > 0;
         let fifteenDaysAgo = new Date();
         fifteenDaysAgo.setDate(fifteenDaysAgo.getDate() - 15);
         const isDetails = location && location.pathname === "/details";
@@ -296,8 +345,9 @@ class FilterSection extends Component {
 
                             </ul>
 
-                            {(isDetails || filterHasValues) ? <div className="btn-control">
+                            <div className="btn-control">
                                 <div className="btn-controls-inner">
+                                    {isDetails ? null : <button className="btn btn-primary" onClick={this.onSubmit}>Submit</button>}
                                     <button className="btn btn-primary" onClick={() => {
                                         if (isDetails) {
                                             this.props.history.goBack();
@@ -307,7 +357,7 @@ class FilterSection extends Component {
                                         }
                                     }}>{isDetails ? "Go Back" : "Reset"}</button>
                                 </div>
-                            </div> : null}
+                            </div>
                         </div>
                     </div>
                 </div>

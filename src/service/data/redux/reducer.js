@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { FETCH_LOGS_LISTING_FAIL, FETCH_LOGS_LISTING_REQ, FETCH_LOGS_LISTING_SUCCESS, FETCH_MASTER_SOURCE_FAIL, FETCH_MASTER_SOURCE_REQ, FETCH_MASTER_SOURCE_SUCCESS, UPDATE_FILTERS_LIST } from "./actionTypes";
+import { FETCH_LOGS_LISTING_EMPTY, FETCH_LOGS_LISTING_FAIL, FETCH_LOGS_LISTING_REQ, FETCH_LOGS_LISTING_SUCCESS, FETCH_MASTER_SOURCE_FAIL, FETCH_MASTER_SOURCE_REQ, FETCH_MASTER_SOURCE_SUCCESS, UPDATE_FILTERS_LIST } from "./actionTypes";
 
 const initialStateFiltersList = {
     filtersList: []
@@ -52,7 +52,8 @@ const sourceList = (state = initialStateSourceList, action) => {
 const initialStateAllLogs = {
     allLogs: [],
     loading: false,
-    error: null
+    error: null,
+    emptyMessage: null
 }
 
 const allLogs = (state = initialStateAllLogs, action) => {
@@ -61,20 +62,31 @@ const allLogs = (state = initialStateAllLogs, action) => {
             return {
                 ...state,
                 loading: true,
-                error: null
+                error: null,
+                emptyMessage: null
             };
         case FETCH_LOGS_LISTING_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 error: null,
+                emptyMessage: null,
                 allLogs: action.payload
+            };
+        case FETCH_LOGS_LISTING_EMPTY:
+            return {
+                ...state,
+                loading: false,
+                error: null,
+                emptyMessage: "No data available for the chosen parameters",
+                allLogs: []
             };
         case FETCH_LOGS_LISTING_FAIL:
             return {
                 ...state,
                 loading: false,
-                error: "Could not find logs for the chosen filters",
+                error: "Error occurred while fetching logs for the chosen parameters",
+                emptyMessage: null,
                 allLogs: []
             };
         default:
