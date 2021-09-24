@@ -205,31 +205,25 @@ class FilterSection extends Component {
                                                 {sourceList.map(item => (
                                                     <option value={item} key={item}>{item}</option>
                                                 ))}
-                                                {/* <option value="">option 2</option>
-                                                <option value="">option 3</option>
-                                                <option value="">option 4</option>
-                                                <option value="">option 5</option> */}
                                             </select>
                                             <label>Source Selection</label>
                                         </div>
+                                        <small className="validation__error__msg">This is error</small>
                                     </div>
                                 </li>
 
                                 <li>
-                                    {/* <div className="floating__placeholder mobile__view">
-                                        <div className="floating__placeholder__inner">
-                                            <input type="date" placeholder=" " />
-                                            <label>Date Range</label>
-                                        </div>
-                                    </div> */}
-                                    <DateRangePicker
-                                        onChange={this.onDatesSelection}
-                                        minDate={fifteenDaysAgo}
-                                        maxDate={new Date()}
-                                        value={dateRange}
-                                        format={"dd-MM-y"}
-                                        disabled={commonDisabler}
-                                    />
+                                    <div className="date-range-picker-wrapper">
+                                        <DateRangePicker
+                                            onChange={this.onDatesSelection}
+                                            minDate={fifteenDaysAgo}
+                                            maxDate={new Date()}
+                                            value={dateRange}
+                                            format={"dd-MM-y"}
+                                            disabled={commonDisabler}
+                                        />
+                                        <label htmlFor="">Date Range</label>
+                                    </div>
                                 </li>
 
                                 <li>
