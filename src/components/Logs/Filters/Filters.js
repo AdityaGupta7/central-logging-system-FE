@@ -7,11 +7,16 @@ import { cloneDeep } from 'lodash';
 class Filters extends Component {
     onOptionRemove = (item) => {
         const { filtersList } = this.props;
-        let clonedList = cloneDeep(filtersList).filter(el => el.value);
-        const index = clonedList.findIndex(el => el.type === item.type);
-        if (index >= 0) {
-            clonedList.splice(index, 1);
-            this.props.updateFiltersList(clonedList);
+        if (item.type === "source") {
+            this.props.updateFiltersList([]);
+        }
+        else {
+            let clonedList = cloneDeep(filtersList).filter(el => el.value);
+            const index = clonedList.findIndex(el => el.type === item.type);
+            if (index >= 0) {
+                clonedList.splice(index, 1);
+                this.props.updateFiltersList(clonedList);
+            }
         }
     }
 

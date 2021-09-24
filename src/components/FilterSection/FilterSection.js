@@ -174,6 +174,7 @@ class FilterSection extends Component {
         const filterHasValues = filtersList.filter(item => item.value).length > 0;
         let fifteenDaysAgo = new Date();
         fifteenDaysAgo.setDate(fifteenDaysAgo.getDate() - 15);
+        const commonDisabler = sourceListLoader || sourceList.length === 0 || source === "";
         return (
             <div className="filter-wrapper">
                 <div className="filter-wrapper-inner">
@@ -200,7 +201,7 @@ class FilterSection extends Component {
                                     <div className="floating__placeholder select__type mobile__view">
                                         <div className="floating__placeholder__inner">
                                             <select value={source} disabled={sourceListLoader || isDisabled} onChange={this.onSelectChange}>
-                                                <option disabled selected hidden value="" key="">Select Source</option>
+                                                <option disabled hidden value="" key="">Select Source</option>
                                                 {sourceList.map(item => (
                                                     <option value={item} key={item}>{item}</option>
                                                 ))}
@@ -227,13 +228,14 @@ class FilterSection extends Component {
                                         maxDate={new Date()}
                                         value={dateRange}
                                         format={"dd-MM-y"}
+                                        disabled={commonDisabler}
                                     />
                                 </li>
 
                                 <li>
                                     <div className="floating__placeholder mobile__view">
                                         <div className="floating__placeholder__inner">
-                                            <input type="text" placeholder=" " onChange={this.onCustIdChange} value={custId} />
+                                            <input type="text" placeholder=" " onChange={this.onCustIdChange} value={custId} disabled={commonDisabler} />
                                             <label>Customer ID</label>
                                         </div>
                                     </div>
@@ -242,7 +244,7 @@ class FilterSection extends Component {
                                 <li>
                                     <div className="floating__placeholder mobile__view">
                                         <div className="floating__placeholder__inner">
-                                            <input type="text" placeholder=" " onChange={this.onMobileNoChange} value={mobNo} />
+                                            <input type="text" placeholder=" " onChange={this.onMobileNoChange} value={mobNo} disabled={commonDisabler} />
                                             <label>Mobile Number</label>
                                         </div>
                                     </div>
@@ -251,7 +253,7 @@ class FilterSection extends Component {
                                 <li>
                                     <div className="floating__placeholder mobile__view">
                                         <div className="floating__placeholder__inner">
-                                            <input type="text" placeholder=" " value={url} onChange={this.onUrlChange} />
+                                            <input type="text" placeholder=" " value={url} onChange={this.onUrlChange} disabled={commonDisabler} />
                                             <label>URL End Point</label>
                                         </div>
                                     </div>
@@ -260,7 +262,7 @@ class FilterSection extends Component {
                                 <li>
                                     <div className="floating__placeholder mobile__view">
                                         <div className="floating__placeholder__inner">
-                                            <input type="text" placeholder=" " onChange={this.onLeadIDChange} value={leadId} />
+                                            <input type="text" placeholder=" " onChange={this.onLeadIDChange} value={leadId} disabled={commonDisabler} />
                                             <label>Lead ID</label>
                                         </div>
                                     </div>
