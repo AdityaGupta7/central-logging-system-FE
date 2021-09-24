@@ -8,6 +8,8 @@ import { numRegex, dateFormat, stateVariables } from '../utils/constants';
 import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 import moment from 'moment';
 import filterIcon from '../../images/filter.png';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class FilterSection extends Component {
     constructor(props) {
@@ -245,7 +247,20 @@ class FilterSection extends Component {
         }
         else {
             //dispatch toast message
+            this.toastMessage();
         }
+    }
+
+    toastMessage = () => {
+        toast.error('No filters selected!', {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
     }
 
     render() {
@@ -257,13 +272,25 @@ class FilterSection extends Component {
         const isDetails = location && location.pathname === "/details";
         const commonDisabler = sourceListLoader || sourceList.length === 0 || source === "" || isDetails;
         return (
-            <div className="filter-wrapper">
-                <div className="filter-wrapper-inner">
-                    <div className="brand-title">
-                        <h3>Search filters <img src={filterIcon} alt="" /></h3>
-                    </div>
+            <>
+                <ToastContainer
+                    position="bottom-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
+                <div className="filter-wrapper">
+                    <div className="filter-wrapper-inner">
+                        <div className="brand-title">
+                            <h3>Search filters <img src={filterIcon} alt="" /></h3>
+                        </div>
 
-                    {/* <div className="user-info-wrapper">
+                        {/* <div className="user-info-wrapper">
                        <div className="user-info-wrapper-inner">
                             <div className="img-wrapper">
                                 <img src="" alt="" />
@@ -275,90 +302,90 @@ class FilterSection extends Component {
                        </div>
                    </div> */}
 
-                    <div className="filter-list-wrapper">
-                        <div className="filter-list-wrapper-inner">
-                            <ul>
-                                <li>
-                                    <div className="floating__placeholder select__type mobile__view">
-                                        <div className="floating__placeholder__inner">
-                                            <select value={source} disabled={sourceListLoader || isDetails} onChange={this.onSelectChange}>
-                                                <option disabled hidden value="" key="">Select Source</option>
-                                                {sourceList.map(item => (
-                                                    <option value={item} key={item}>{item}</option>
-                                                ))}
-                                            </select>
-                                            <label>Source Selection</label>
+                        <div className="filter-list-wrapper">
+                            <div className="filter-list-wrapper-inner">
+                                <ul>
+                                    <li>
+                                        <div className="floating__placeholder select__type mobile__view">
+                                            <div className="floating__placeholder__inner">
+                                                <select value={source} disabled={sourceListLoader || isDetails} onChange={this.onSelectChange}>
+                                                    <option disabled hidden value="" key="">Select Source</option>
+                                                    {sourceList.map(item => (
+                                                        <option value={item} key={item}>{item}</option>
+                                                    ))}
+                                                </select>
+                                                <label>Source Selection</label>
+                                            </div>
+                                            {!source ? <small className="validation__error__msg">Select logs source</small> : null}
                                         </div>
-                                        {!source ? <small className="validation__error__msg">Select logs source</small> : null}
-                                    </div>
-                                </li>
+                                    </li>
 
-                                <li>
-                                    <div className="date-range-picker-wrapper">
-                                        <DateRangePicker
-                                            onChange={this.onDatesSelection}
-                                            minDate={fifteenDaysAgo}
-                                            maxDate={new Date()}
-                                            value={dateRange}
-                                            format={"dd-MM-y"}
-                                            disabled={commonDisabler}
-                                        />
-                                        <label htmlFor="">Date Range</label>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <div className="floating__placeholder mobile__view">
-                                        <div className="floating__placeholder__inner">
-                                            <input type="text" placeholder=" " onChange={this.onCustIdChange} value={custId} disabled={commonDisabler} />
-                                            <label>Customer ID</label>
+                                    <li>
+                                        <div className="date-range-picker-wrapper">
+                                            <DateRangePicker
+                                                onChange={this.onDatesSelection}
+                                                minDate={fifteenDaysAgo}
+                                                maxDate={new Date()}
+                                                value={dateRange}
+                                                format={"dd-MM-y"}
+                                                disabled={commonDisabler}
+                                            />
+                                            <label htmlFor="">Date Range</label>
                                         </div>
-                                    </div>
-                                </li>
+                                    </li>
 
-                                <li>
-                                    <div className="floating__placeholder mobile__view">
-                                        <div className="floating__placeholder__inner">
-                                            <input type="text" placeholder=" " onChange={this.onMobileNoChange} value={mobNo} disabled={commonDisabler} />
-                                            <label>Mobile Number</label>
+                                    <li>
+                                        <div className="floating__placeholder mobile__view">
+                                            <div className="floating__placeholder__inner">
+                                                <input type="text" placeholder=" " onChange={this.onCustIdChange} value={custId} disabled={commonDisabler} />
+                                                <label>Customer ID</label>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
+                                    </li>
 
-                                <li>
-                                    <div className="floating__placeholder mobile__view">
-                                        <div className="floating__placeholder__inner">
-                                            <input type="text" placeholder=" " value={url} onChange={this.onUrlChange} disabled={commonDisabler} />
-                                            <label>URL End Point</label>
+                                    <li>
+                                        <div className="floating__placeholder mobile__view">
+                                            <div className="floating__placeholder__inner">
+                                                <input type="text" placeholder=" " onChange={this.onMobileNoChange} value={mobNo} disabled={commonDisabler} />
+                                                <label>Mobile Number</label>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
+                                    </li>
 
-                                <li>
-                                    <div className="floating__placeholder mobile__view">
-                                        <div className="floating__placeholder__inner">
-                                            <input type="text" placeholder=" " onChange={this.onLeadIDChange} value={leadId} disabled={commonDisabler} />
-                                            <label>Lead ID</label>
+                                    <li>
+                                        <div className="floating__placeholder mobile__view">
+                                            <div className="floating__placeholder__inner">
+                                                <input type="text" placeholder=" " value={url} onChange={this.onUrlChange} disabled={commonDisabler} />
+                                                <label>URL End Point</label>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
+                                    </li>
 
-                            </ul>
+                                    <li>
+                                        <div className="floating__placeholder mobile__view">
+                                            <div className="floating__placeholder__inner">
+                                                <input type="text" placeholder=" " onChange={this.onLeadIDChange} value={leadId} disabled={commonDisabler} />
+                                                <label>Lead ID</label>
+                                            </div>
+                                        </div>
+                                    </li>
 
-                            <div className="btn-control">
-                                <div className="btn-controls-inner">
-                                    <ul className={isDetails ? "" : "two-column"}>
-                                        {isDetails ? null : <li><button className="btn btn-primary" onClick={this.onSubmit}>Submit</button></li>}
-                                        <li> <button className={`btn btn-primary ${isDetails ? '' : 'btn-primary-outline'}`} onClick={() => {
-                                            if (isDetails) {
-                                                this.props.history.goBack();
-                                            }
-                                            else {
-                                                this.onReset();
-                                            }
-                                        }}>{isDetails ? "Go Back" : "Reset"}</button></li>
-                                    </ul>
-                                    {/* {isDetails ? null : <button className="btn btn-primary" onClick={this.onSubmit}>Submit</button>}
+                                </ul>
+
+                                <div className="btn-control">
+                                    <div className="btn-controls-inner">
+                                        <ul className={isDetails ? "" : "two-column"}>
+                                            {isDetails ? null : <li><button className="btn btn-primary" onClick={this.onSubmit}>Submit</button></li>}
+                                            <li> <button className={`btn btn-primary ${isDetails ? '' : 'btn-primary-outline'}`} onClick={() => {
+                                                if (isDetails) {
+                                                    this.props.history.goBack();
+                                                }
+                                                else {
+                                                    this.onReset();
+                                                }
+                                            }}>{isDetails ? "Go Back" : "Reset"}</button></li>
+                                        </ul>
+                                        {/* {isDetails ? null : <button className="btn btn-primary" onClick={this.onSubmit}>Submit</button>}
                                     <button className="btn btn-primary" onClick={() => {
                                         if (isDetails) {
                                             this.props.history.goBack();
@@ -367,12 +394,13 @@ class FilterSection extends Component {
                                             this.onReset();
                                         }
                                     }}>{isDetails ? "Go Back" : "Reset"}</button> */}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </>
         )
     }
 }
