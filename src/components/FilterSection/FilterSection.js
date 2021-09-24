@@ -4,7 +4,9 @@ import { connect } from "react-redux";
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { fetchLogsListInjector, fetchMasterSource, updateFiltersListInjector, clearLogsData } from '../../service/data/redux/actions';
-import { numRegex } from '../utils/constants';
+import { numRegex, dateFormat } from '../utils/constants';
+import DateRangePicker from '@wojtekmaj/react-daterange-picker';
+import moment from 'moment';
 
 class FilterSection extends Component {
     constructor(props) {
@@ -12,6 +14,7 @@ class FilterSection extends Component {
         const savedState = props && props.location && props.location.state;
         this.state = {
             source: (savedState && savedState.source) || "",
+            dateRange: null,
             custId: (savedState && savedState.custId) || "",
             mobNo: (savedState && savedState.mobNo) || "",
             url: (savedState && savedState.url) || "",
@@ -32,7 +35,14 @@ class FilterSection extends Component {
                 console.log('cleanup hit');
                 //fields cleanup
                 const obj = {};
-                ['source', 'custId', 'mobNo', 'url', 'leadId'].filter(item => filtersList.find(el => el.type === item) === undefined).forEach(item => obj[item] = "");
+                ['source', 'dateRange', 'custId', 'mobNo', 'url', 'leadId',].filter(item => filtersList.find(el => el.type === item) === undefined).forEach(item => {
+                    if (item === "dateRange") {
+                        obj[item] = null;
+                    }
+                    else {
+                        obj[item] = "";
+                    }
+                });
                 if (Object.keys(obj).length > 0) {
                     this.setState(obj, () => console.log('state after cleanup -> ', this.state));
                 }
@@ -140,9 +150,30 @@ class FilterSection extends Component {
         }
     }
 
+    onDatesSelection = (val) => {
+        console.log('from date picker -> ', JSON.stringify(val));
+        this.setState({
+            dateRange: val
+        }, () => {
+            const { dateRange } = this.state;
+            let str = null;
+            if (dateRange && dateRange.length === 2) {
+                //non-empty dateRange
+                const startDate = moment(dateRange[0]).format(dateFormat);
+                const endDate = moment(dateRange[1]).format(dateFormat);
+
+                str = `${startDate} - ${endDate}`;
+            }
+            this.addToFiltersList({ type: 'dateRange', value: str, label: 'Date range', originalDateRange: dateRange });
+        });
+    }
+
     render() {
-        const { source, custId, mobNo, url, leadId, isDisabled } = this.state;
-        const { sourceList, sourceListLoader } = this.props;
+        const { source, custId, mobNo, url, leadId, isDisabled, dateRange } = this.state;
+        const { sourceList, sourceListLoader, filtersList } = this.props;
+        const filterHasValues = filtersList.filter(item => item.value).length > 0;
+        let fifteenDaysAgo = new Date();
+        fifteenDaysAgo.setDate(fifteenDaysAgo.getDate() - 15);
         return (
             <div className="filter-wrapper">
                 <div className="filter-wrapper-inner">
@@ -184,12 +215,19 @@ class FilterSection extends Component {
                                 </li>
 
                                 <li>
-                                    <div className="floating__placeholder mobile__view">
+                                    {/* <div className="floating__placeholder mobile__view">
                                         <div className="floating__placeholder__inner">
                                             <input type="date" placeholder=" " />
                                             <label>Date Range</label>
                                         </div>
-                                    </div>
+                                    </div> */}
+                                    <DateRangePicker
+                                        onChange={this.onDatesSelection}
+                                        minDate={fifteenDaysAgo}
+                                        maxDate={new Date()}
+                                        value={dateRange}
+                                        format={"dd-MM-y"}
+                                    />
                                 </li>
 
                                 <li>
@@ -230,11 +268,11 @@ class FilterSection extends Component {
 
                             </ul>
 
-                            <div className="btn-control">
+                            {filterHasValues ? <div className="btn-control">
                                 <div className="btn-controls-inner">
                                     <button className="btn btn-primary" onClick={this.onReset}>Reset</button>
                                 </div>
-                            </div>
+                            </div> : null}
                         </div>
                     </div>
                 </div>
