@@ -74,8 +74,22 @@ class FilterSection extends Component {
         //const noEmptyValue = filtersList.filter(item => item.value);
         if (filtersList.length > 0) {
             //send fetch logs API
-            const reqPayload = filtersList.map(item => ({ type: item.type, value: item.value }));
-            this.props.fetchLogs(reqPayload);
+            const reqPayload = {};
+            filtersList.forEach(item => {
+                if (item.type === "dateRange") {
+                    if (item.value && item.originalDateRange && item.originalDateRange.length > 0) {
+                        reqPayload['dateRangeFrom'] = item.originalDateRange[0].getTime();
+                        reqPayload['dateRangeTo'] = item.originalDateRange[1].getTime();
+                    }
+                }
+                else {
+                    reqPayload[item.type] = item.value;
+                }
+            })
+            if (Object.keys(reqPayload).length > 0) {
+                console.log('reqPayload -> ', reqPayload);
+                this.props.fetchLogs(reqPayload);
+            }
         }
         else {
             //last filter also removed - no data state
