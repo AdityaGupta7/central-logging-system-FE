@@ -7,6 +7,7 @@ import { fetchLogsListInjector, fetchMasterSource, updateFiltersListInjector, cl
 import { numRegex, dateFormat, stateVariables } from '../utils/constants';
 import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 import moment from 'moment';
+import filterIcon from '../../images/filter.png';
 
 class FilterSection extends Component {
     constructor(props) {
@@ -210,7 +211,7 @@ class FilterSection extends Component {
             <div className="filter-wrapper">
                 <div className="filter-wrapper-inner">
                     <div className="brand-title">
-                        <h3>Search filters</h3>
+                        <h3>Search filters <img src={filterIcon} alt="" /></h3>
                     </div>
 
                     {/* <div className="user-info-wrapper">

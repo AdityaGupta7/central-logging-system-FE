@@ -16,11 +16,17 @@ class Details extends Component {
                         <div className="search-results-wrapper-inner">
 
                             <div className="url-block">
-                                <ul>
-                                    <li><strong>URL:</strong> {selectedItem.url}</li>
-                                    <li>({selectedItem.requestType})</li>
-                                    <li><p className="card-state">{selectedItem.isSuccess ? "SUCCESS" : "FAILED"}</p></li>
-                                </ul>
+                                <div className="d-flex">
+                                    <ul>
+                                        <li><strong>URL:</strong> {selectedItem.url}</li>
+                                    </ul>
+                                    <ul>
+                                        <li><label>Type:</label> ({selectedItem.requestType})</li>
+                                        <li><label>Status Code:</label>500</li>
+                                        <li><label>Time:</label>234 ms</li>
+                                        <li><label>Log Status:</label><p className="card-state">{selectedItem.isSuccess ? "SUCCESS" : "FAILED"}</p></li>
+                                    </ul>
+                                </div>
                             </div>
 
                             <h6 className="container-heading">Request Payload</h6>
