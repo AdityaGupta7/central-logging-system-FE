@@ -24,7 +24,7 @@ class Clock extends React.Component {
     render() {
         return (
             <p className="App-clock">
-                {this.state.time}
+                {this.state.time.split(',').map(item=>(<span>{item}</span>))}
             </p>
         );
     }

@@ -390,15 +390,40 @@ ol {
 .top-navbar {
     background-color: $N0;
     border-radius: 8px;
-    padding: 20px 14px;
+    padding: 10px 14px;
     @include box-shadow(2px, 2px, 16px, 0, rgba(#000, 0.2));
 
     .top-header-inner {
         ul {
+            @include flexbox;
+            @include flex-wrap(wrap);
+            @include justify-content(space-between);
+
             li {
                 font-size: 16px;
                 font-weight: $med;
                 letter-spacing: 0.5px;
+                @include align-self(center);
+
+                .App-clock {
+                    font-weight: $regular;
+                    font-size: 12px;
+                    @include flexbox;
+                    @include flex-direction(column-reverse);
+                    @include justify-content(center);
+
+                    span {
+                        display: block;
+                        @include flex-basis(100%);
+                        max-width: 100%;
+                        text-align: center;
+
+                        &:last-child {
+                            font-weight: $med;
+                            margin-bottom: 4px;
+                        }
+                    }
+                }
             }
         }
     }
@@ -895,6 +920,138 @@ ol {
         cursor: pointer;
     }
 }
+
+.total-api-count {
+    @include flexbox;
+    @include flex-wrap(wrap);
+    @include justify-content(space-between);
+    margin-top: 30px;
+    margin-bottom: 10px;
+
+    .container-heading {
+        margin-top: 0;
+        margin-bottom: 0;
+        @include align-self(center);
+
+        label {
+            color: $B300;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    }
+
+    .total-api {
+        margin-left: auto;
+        text-align: center;
+        @include align-self(center);
+        font-size: 12px;
+        border-radius: 4px;
+        overflow: hidden;
+        padding: 3px 0;
+
+        label {
+            font-weight: 500;
+            color: #006B7E;
+            padding: 4px 8px;
+            background: rgba(0, 199, 230, 0.3);
+        }
+
+        span {
+            color: #006B7E;
+            padding: 4px 8px;
+            background: #e6fcff;
+            max-width: 80px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+}
+
+// stats popup
+.stats-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 999;
+    background-color: rgba(#000, 0);
+    @include flexbox;
+    @include justify-content(center);
+    visibility: hidden;
+    @include transitions;
+
+    .stats-popup-inner {
+        background-color: $N0;
+        max-width: 560px;
+        width: 560px;
+        border-radius: 8px;
+        overflow: hidden;
+        @include align-self(center);
+        @include translate(0, 200%);
+        @include transitions;
+
+        .popup-header {
+            padding: 16px;
+            
+            .popup-header-inner {
+                padding-bottom: 16px;
+                @include flexbox;
+                @include flex-wrap(wrap);
+                @include justify-content(space-between);
+                border-bottom: 1px solid rgba(#000, 0.1);
+
+                label{
+                    cursor: pointer;
+                }
+
+                img {
+                    width: 14px;
+                }
+            }
+        }
+
+        .popup-body {
+            
+            .popup-body-inner {
+                padding: 0 16px 16px;
+                max-height: 70vh;
+                overflow-y: auto;
+
+                // changing width of scrollbar
+                &::-webkit-scrollbar {
+                    width: 5px;
+                    background-color: #e5e6e6;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background-color: #cecece;
+                    border-radius: 25%;
+                }
+            }
+        }
+    }
+}
+
+// popup trigger
+#popup-trigger{
+    display: none;
+
+    &:checked{
+        &~ .stats-popup{
+            background: rgba(#000, 0.5);
+            visibility: visible;
+            @include transitions;
+
+            .stats-popup-inner{
+                @include translate(0, 0);
+                @include transitions;
+            }
+        }
+    }
+}
+
 
 @keyframes left-to-right-slide {
     0% {

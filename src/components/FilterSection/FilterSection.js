@@ -253,7 +253,7 @@ class FilterSection extends Component {
 
     toastMessage = () => {
         toast.error('No filters selected!', {
-            position: "bottom-right",
+            position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -274,7 +274,7 @@ class FilterSection extends Component {
         return (
             <>
                 <ToastContainer
-                    position="bottom-right"
+                    position="top-right"
                     autoClose={5000}
                     hideProgressBar={false}
                     newestOnTop={false}
