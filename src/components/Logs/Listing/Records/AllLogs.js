@@ -95,7 +95,7 @@ class AllLogs extends Component {
                     <div className="stats-popup-inner">
                         <div className="popup-header">
                             <div className="popup-header-inner">
-                                <h4>Breakdown</h4>
+                                <h4>Status Breakdown</h4>
                                 <label htmlFor="popup-trigger"><img src={popupClose} alt="" /></label>
                             </div>
                         </div>
