@@ -86,6 +86,7 @@ ol {
             color: #7A869A;
             font-size: 16px;
             pointer-events: none;
+            border-radius: 4px;
             @include transitions;
             @include translate(0, -50%);
         }
@@ -101,6 +102,10 @@ ol {
             padding: 26px 15px 8px;
             display: block;
             color: $N700;
+
+            &:disabled{
+                background: #f0f0f0;
+            }
 
             &:focus,
             &:not(:placeholder-shown) {
@@ -128,6 +133,10 @@ ol {
             padding: 26px 15px 8px;
             display: block;
             color: $N700;
+
+            &:disabled{
+                background: #f0f0f0;
+            }
 
             &:focus,
             &:not([value=""]):valid,
@@ -290,7 +299,8 @@ ol {
             padding-top: 12px;
 
             &:focus,
-            &:not([value=""]):valid {
+            &:not([value=""]):valid,
+            &:disabled {
                 outline: 0;
                 box-shadow: 0;
 
@@ -363,9 +373,9 @@ ol {
                 letter-spacing: 1px;
 
                 img {
-                    width: 20px;
+                    width: 18px;
                     vertical-align: middle;
-                    margin-top: -2px;
+                    margin-top: -3px;
                 }
             }
         }
@@ -609,12 +619,13 @@ ol {
                     left: -7px;
                     height: 18px;
                     width: 18px;
-                    background-color: yellow;
+                    background-color: #fff;
+                    color: #333;
                     border-radius: 50%;
                     text-align: center;
                     line-height: 18px;
                     font-size: 12px;
-                    @include box-shadow(2px, 2px, 16px, 0, rgba(#000, 0.2));
+                    @include box-shadow(2px, 2px, 7px, 0, rgba(#000, 0.2));
                 }
             }
 
@@ -706,15 +717,15 @@ ol {
 
     &.success {
         .card-state {
-            background-color: #E6F2E8;
-            color: #76A585;
+            background-color: #D0FCD7;
+            color: #37CC4F;
         }
 
         .card-inner {
             &>ul {
                 li {
                     .data-block {
-                        background-color: #E6F2E8;
+                        background-color: rgba(208, 252, 215, 0.45);
                     }
                 }
             }
@@ -723,15 +734,15 @@ ol {
 
     &.failure {
         .card-state {
-            background-color: #FEF2F6;
-            color: #C05862;
+            background-color: #FFEFE5;
+            color: #FF5A5A;
         }
 
         .card-inner {
             &>ul {
                 li {
                     .data-block {
-                        background-color: #FEF2F6;
+                        background-color: rgba(255, 239, 229, 0.45);
                     }
                 }
             }
@@ -816,8 +827,8 @@ ol {
             &.success {
                 .url-block {
                     .card-state {
-                        background-color: #E6F2E8;
-                        color: #76A585;
+                        background-color: #D0FCD7;
+                        color: #37CC4F;
                     }
                 }
             }
@@ -825,8 +836,8 @@ ol {
             &.failure {
                 .url-block {
                     .card-state {
-                        background-color: #FEF2F6;
-                        color: #C05862;
+                        background-color: #FFEFE5;
+                        color: #FF5A5A;
                     }
                 }
             }
@@ -891,6 +902,10 @@ ol {
         .react-daterange-picker__inputGroup {
             input {
                 outline: none !important;
+            }
+
+            .react-daterange-picker__inputGroup__input:invalid{
+                background-color: transparent;
             }
         }
     }
@@ -991,12 +1006,12 @@ ol {
     .stats-popup-inner {
         background-color: $N0;
         max-width: 560px;
-        width: 560px;
         border-radius: 8px;
         overflow: hidden;
         @include align-self(center);
         @include translate(0, 200%);
         @include transitions;
+        @include box-shadow(2px, 2px, 16px, 0, rgba(#000, 0.2));
 
         .popup-header {
             padding: 16px;
@@ -1008,12 +1023,30 @@ ol {
                 @include justify-content(space-between);
                 border-bottom: 1px solid rgba(#000, 0.1);
 
+                h4{
+                    @include align-self(center);
+                }
+
                 label{
                     cursor: pointer;
+                    background: #FFEFE5;
+                    height: 30px;
+                    width: 30px;
+                    border-radius: 50%;
+                    display: block;
+                    @include box-shadow(2px, 2px, 16px, 0, rgba(#000, 0.2));
+                    @include transitions;
+
+                    &:hover{
+                        @include box-shadow(2px, 2px, 16px, 0, rgba(#000, 0.1));
+                        @include transitions;
+                    }
                 }
 
                 img {
-                    width: 14px;
+                    width: 12px;
+                    display: block;
+                    margin: 9px auto 0;
                 }
             }
         }
