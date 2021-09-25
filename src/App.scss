@@ -89,6 +89,10 @@ ol {
             border-radius: 4px;
             @include transitions;
             @include translate(0, -50%);
+
+            @media (max-width: 768px){
+                font-size: 14px;
+            }
         }
 
         // triggering input & textarea placeholder on desktop & mobile
@@ -103,7 +107,13 @@ ol {
             display: block;
             color: $N700;
 
-            &:disabled{
+            @media (max-width: 768px){
+                height: 46px;
+                font-size: 14px;
+                border-radius: 6px;
+            }
+
+            &:disabled {
                 background: #f0f0f0;
             }
 
@@ -134,7 +144,13 @@ ol {
             display: block;
             color: $N700;
 
-            &:disabled{
+            @media (max-width: 768px){
+                height: 46px;
+                font-size: 14px;
+                border-radius: 6px;
+            }
+
+            &:disabled {
                 background: #f0f0f0;
             }
 
@@ -329,12 +345,60 @@ ol {
         .left-side-bar {
             @include flex-basis(320px);
             max-width: 320px;
+
+            @media (max-width: 768px) {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                height: 100%;
+                @include transitions;
+                z-index: 99999;
+            }
         }
 
         .right-content-wrapper {
             @include flex-basis(calc(100% - 320px));
             max-width: calc(100% - 320px);
             padding-left: 16px;
+
+            @media (max-width: 768px) {
+                @include flex-basis(calc(100%));
+                max-width: calc(100%);
+                padding-left: 0;
+            }
+        }
+    }
+}
+
+// menu backdrop
+.menu-backdrop {
+    position: fixed;
+    content: "";
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba($N700, 0.5);
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    @include transitions;
+}
+
+// side bar menu trigger for mobile
+#side-bar-menu-trigger {
+    display: none;
+
+    &:checked {
+        &~.left-side-bar {
+            left: 0;
+            @include transitions;
+        }
+
+        &~.menu-backdrop {
+            opacity: 1;
+            visibility: visible;
+            @include transitions;
         }
     }
 }
@@ -347,6 +411,11 @@ ol {
     height: calc(100vh - 32px);
     overflow-y: auto;
     @include box-shadow(2px, 2px, 16px, 0, rgba(#000, 0.2));
+
+    @media (max-width: 768px) {
+        height: 100%;
+        border-radius: 0 8px 8px 0;
+    }
 
     // changing width of scrollbar
     &::-webkit-scrollbar {
@@ -376,6 +445,29 @@ ol {
                     width: 18px;
                     vertical-align: middle;
                     margin-top: -3px;
+                }
+            }
+
+            &.menu-icon-wrapper {
+                @include flexbox;
+                @include flex-wrap(wrap);
+                @include justify-content(space-between);
+
+                label {
+                    display: block;
+                    height: 28px;
+                    width: 28px;
+                    @include align-self(center);
+                    margin-top: -2px;
+                    cursor: pointer;
+
+                    @media (min-width: 768px) {
+                        display: none;
+                    }
+
+                    img {
+                        width: 100%;
+                    }
                 }
             }
         }
@@ -415,10 +507,28 @@ ol {
                 letter-spacing: 0.5px;
                 @include align-self(center);
 
-                img{
+                @media (max-width: 768px) {
+                    font-size: 14px;
+                }
+
+                &.side-bar-icon {
+                    img {
+                        width: 24px;
+                    }
+
+                    @media (min-width: 768px) {
+                        display: none;
+                    }
+                }
+
+                &>img {
                     width: 30px;
                     margin-right: 5px;
                     vertical-align: middle;
+
+                    @media (max-width: 768px) {
+                        display: none;
+                    }
                 }
 
                 .App-clock {
@@ -427,6 +537,10 @@ ol {
                     @include flexbox;
                     @include flex-direction(column-reverse);
                     @include justify-content(center);
+
+                    @media (max-width: 768px) {
+                        font-size: 10px;
+                    }
 
                     span {
                         display: block;
@@ -502,6 +616,10 @@ ol {
             max-height: calc(100vh - 233px);
             overflow-y: auto;
             position: relative;
+
+            @media (max-width: 768px) {
+                max-height: unset;
+            }
 
             .loader-skeleton {
                 &>ul {
@@ -637,6 +755,10 @@ ol {
                 border: 2px dashed rgba(#000, 0.2);
                 border-radius: 8px;
 
+                @media (max-width: 768px){
+                    height: calc(100vh - 170px);
+                }
+
                 .no-result-screen-inner {
                     @include align-self(center);
 
@@ -677,6 +799,7 @@ ol {
             font-size: 14px;
             margin-bottom: 10px;
             color: $B300;
+            line-height: 16px;
             word-break: break-all;
 
             strong {
@@ -686,14 +809,28 @@ ol {
 
         &>ul {
             @include flexbox;
+            @include flex-wrap(wrap);
             @include justify-content(space-between);
 
             li {
                 @include flex-basis(calc((100% - (16px * 4)) / 4));
 
+                @media (max-width: 768px) {
+                    @include flex-basis(calc(50% - 8px));
+
+                    &:nth-child(1),
+                    &:nth-child(2) {
+                        margin-bottom: 16px;
+                    }
+                }
+
                 .data-block {
                     padding: 16px;
                     border-radius: 8px;
+
+                    @media (max-width: 768px) {
+                        padding: 12px;
+                    }
 
 
                     .data-block-inner {
@@ -702,11 +839,20 @@ ol {
                             font-size: 14px;
                             font-weight: $med;
                             margin-bottom: 16px;
+
+                            @media (max-width: 768px) {
+                                margin-bottom: 6px;
+                                font-size: 12px;
+                            }
                         }
 
                         strong {
                             display: block;
                             font-weight: $bold;
+
+                            @media (max-width: 768px) {
+                                font-size: 14px;
+                            }
                         }
                     }
                 }
@@ -765,6 +911,10 @@ ol {
                     @include flexbox;
                     @include flex-wrap(wrap);
                     @include justify-content(space-between);
+
+                    @media (max-width: 768px) {
+                        display: block;
+                    }
                 }
 
                 .card-state {
@@ -784,6 +934,10 @@ ol {
                     &:first-child {
                         max-width: 55%;
 
+                        @media (max-width: 768px) {
+                            max-width: 100%;
+                        }
+
                         li {
                             color: $B300;
                             font-size: 14px;
@@ -800,6 +954,11 @@ ol {
                     &:last-child {
                         @include justify-content(flex-end);
 
+                        @media (max-width: 768px) {
+                            @include justify-content(flex-start);
+                            margin-top: 16px;
+                        }
+
                         li {
                             font-size: 12px;
                             font-weight: $med;
@@ -807,6 +966,10 @@ ol {
 
                             &:not(:last-child) {
                                 margin-right: 12px;
+
+                                @media(max-width: 768px) {
+                                    margin-bottom: 8px;
+                                }
                             }
 
                             label {
@@ -899,12 +1062,17 @@ ol {
         padding-left: 12px;
         padding-right: 12px;
 
+        @media (max-width: 768px){
+            height: 46px;
+            border-radius: 6px;
+        }
+
         .react-daterange-picker__inputGroup {
             input {
                 outline: none !important;
             }
 
-            .react-daterange-picker__inputGroup__input:invalid{
+            .react-daterange-picker__inputGroup__input:invalid {
                 background-color: transparent;
             }
         }
@@ -1013,9 +1181,13 @@ ol {
         @include transitions;
         @include box-shadow(2px, 2px, 16px, 0, rgba(#000, 0.2));
 
+        @media (max-width: 768px){
+            max-width: 320px;
+        }
+
         .popup-header {
             padding: 16px;
-            
+
             .popup-header-inner {
                 padding-bottom: 16px;
                 @include flexbox;
@@ -1023,11 +1195,11 @@ ol {
                 @include justify-content(space-between);
                 border-bottom: 1px solid rgba(#000, 0.1);
 
-                h4{
+                h4 {
                     @include align-self(center);
                 }
 
-                label{
+                label {
                     cursor: pointer;
                     background: #FFEFE5;
                     height: 30px;
@@ -1037,7 +1209,7 @@ ol {
                     @include box-shadow(2px, 2px, 16px, 0, rgba(#000, 0.2));
                     @include transitions;
 
-                    &:hover{
+                    &:hover {
                         @include box-shadow(2px, 2px, 16px, 0, rgba(#000, 0.1));
                         @include transitions;
                     }
@@ -1052,7 +1224,7 @@ ol {
         }
 
         .popup-body {
-            
+
             .popup-body-inner {
                 padding: 0 16px 16px;
                 max-height: 70vh;
@@ -1074,16 +1246,16 @@ ol {
 }
 
 // popup trigger
-#popup-trigger{
+#popup-trigger {
     display: none;
 
-    &:checked{
-        &~ .stats-popup{
+    &:checked {
+        &~.stats-popup {
             background: rgba(#000, 0.5);
             visibility: visible;
             @include transitions;
 
-            .stats-popup-inner{
+            .stats-popup-inner {
                 @include translate(0, 0);
                 @include transitions;
             }

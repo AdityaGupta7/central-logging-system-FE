@@ -8,6 +8,7 @@ import { numRegex, dateFormat, stateVariables } from '../utils/constants';
 import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 import moment from 'moment';
 import filterIcon from '../../images/filter.png';
+import menuClose from '../../images/menu-close.png';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -300,8 +301,9 @@ class FilterSection extends Component {
                 />
                 <div className="filter-wrapper">
                     <div className="filter-wrapper-inner">
-                        <div className="brand-title">
+                        <div className="brand-title menu-icon-wrapper">
                             <h3>Search filters <img src={filterIcon} alt="" /></h3>
+                            <label htmlFor="side-bar-menu-trigger"><img src={menuClose} alt="" /></label>
                         </div>
 
                         {/* <div className="user-info-wrapper">
@@ -389,7 +391,7 @@ class FilterSection extends Component {
                                 <div className="btn-control">
                                     <div className="btn-controls-inner">
                                         <ul className={isDetails ? "" : "two-column"}>
-                                            {isDetails ? null : <li><button className="btn btn-primary" onClick={this.onSubmit}>Submit</button></li>}
+                                            {isDetails ? null : <li><label htmlFor="side-bar-menu-trigger" className="btn btn-primary" onClick={this.onSubmit}>Submit</label></li>}
                                             <li> <button className={`btn btn-primary ${isDetails ? '' : 'btn-primary-outline'}`} onClick={() => {
                                                 if (isDetails) {
                                                     this.props.history.goBack();

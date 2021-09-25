@@ -13,9 +13,11 @@ class App extends Component {
         <div className="App">
           <div className="main-wrapper">
             <div className="main-wrapper-inner">
+              <input type="checkbox" id="side-bar-menu-trigger" />
               <div className="left-side-bar">
                 <FilterSection />
               </div>
+              <label htmlFor="side-bar-menu-trigger" className="menu-backdrop"></label>
               <div className="right-content-wrapper">
                 <NavHeader />
                 <div className="container-switch">
